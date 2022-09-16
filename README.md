@@ -4,6 +4,8 @@ A plugin for Remark to rewrite links by a given function. This is useful for exa
 
 ## Installation
 
+This package is ESM only. In Node.js (version 12.20+, 14.14+, or 16.0+), install with npm:
+
 ```bash
 npm install remark-link-rewrite
 ```
@@ -12,7 +14,7 @@ npm install remark-link-rewrite
 
 ```javascript
 import { remark } from 'remark';
-import RemarkLinkRewrite from 'remark-link-rewrite/esm';
+import RemarkLinkRewrite from 'remark-link-rewrite';
 
 remark()
   .use(RemarkLinkRewrite, {
