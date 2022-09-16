@@ -12,7 +12,7 @@ npm install remark-link-rewrite
 
 ```javascript
 import { remark } from 'remark';
-import RemarkLinkRewrite from 'remark-link-rewrite';
+import RemarkLinkRewrite from 'remark-link-rewrite/esm';
 
 remark()
   .use(RemarkLinkRewrite, {

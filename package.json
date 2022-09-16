@@ -1,13 +1,13 @@
 {
   "name": "remark-link-rewrite",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Updates link URLs using a replacer function.",
-  "main": "dist/remark-link-rewrite.cjs.js",
-  "module": "dist/remark-link-rewrite.esm.js",
-  "browser": "dist/remark-link-rewrite.umd.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "browser": "dist/umd/index.js",
   "exports": {
-    "import": "./dist/remark-link-rewrite.esm.js",
-    "require": "./dist/remark-link-rewrite.cjs.js"
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "scripts": {
     "build": "rollup -c",
