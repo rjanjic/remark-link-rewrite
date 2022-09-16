@@ -5,6 +5,10 @@
   "main": "dist/remark-link-rewrite.cjs.js",
   "module": "dist/remark-link-rewrite.esm.js",
   "browser": "dist/remark-link-rewrite.umd.js",
+  "exports": {
+    "import": "./dist/remark-link-rewrite.esm.js",
+    "require": "./dist/remark-link-rewrite.cjs.js"
+  },
   "scripts": {
     "build": "rollup -c",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",

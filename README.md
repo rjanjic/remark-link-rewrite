@@ -11,11 +11,11 @@ npm install remark-link-rewrite
 ## Usage
 
 ```javascript
-const remark = require('remark')
-const linkRewrite = require('remark-link-rewrite')
+import { remark } from 'remark';
+import RemarkLinkRewrite from 'remark-link-rewrite';
 
 remark()
-  .use(linkRewrite, {
+  .use(RemarkLinkRewrite, {
     replacer: (url) => {
       if (url.startsWith('https://example.com')) {
         return url.replace('https://example.com', 'https://example.org')
@@ -26,7 +26,7 @@ remark()
   .process('[Example](https://example.com)')
   .then(({ value }) => {
     console.log(String(value))
-  })
+  });
 ```
 
 ## Options
