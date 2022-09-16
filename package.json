@@ -1,6 +1,6 @@
 {
   "name": "remark-link-rewrite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Updates link URLs using a replacer function.",
   "main": "dist/remark-link-rewrite.cjs.js",
   "module": "dist/remark-link-rewrite.esm.js",
