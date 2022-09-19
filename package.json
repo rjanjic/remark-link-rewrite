@@ -1,10 +1,10 @@
 {
   "name": "remark-link-rewrite",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Updates link URLs using a replacer function.",
   "main": "src/index.js",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --collect-coverage"
   },
   "type": "module",
   "author": "Radovan Janjic <hi@rjanjic.com>",
