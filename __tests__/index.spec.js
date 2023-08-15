@@ -1,13 +1,13 @@
-import {remark} from 'remark';
-import {promisify} from 'util';
-import linkRewrite, {replaceAsync, rewriteJSXURL} from '../src';
+import { remark } from 'remark';
+import { promisify } from 'util';
+import linkRewrite, { replaceAsync, rewriteJSXURL } from '../src';
 
 const sleep = promisify(setTimeout);
 const random = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
 
 async function run(input, options) {
   const processor = remark().use(linkRewrite, options);
-  const {value} = await processor.process(input);
+  const { value } = await processor.process(input);
   return value;
 }
 
@@ -23,10 +23,10 @@ describe('remark-link-rewrite', () => {
     const output = await run(input, {
       replacer: (url) => {
         if (url.startsWith('https://example.com')) {
-          return url.replace('https://example.com', 'https://example.org')
+          return url.replace('https://example.com', 'https://example.org');
         }
-        return url
-      }
+        return url;
+      },
     });
     expect(output).toMatch('[Example](https://example.org)');
   });
@@ -41,7 +41,7 @@ describe('remark-link-rewrite', () => {
     }
 
     const input = '[Example](https://www.google.com)';
-    const output = await run(input, {replacer: replaceGoogleWithBing});
+    const output = await run(input, { replacer: replaceGoogleWithBing });
     expect(output).toMatch('[Example](https://www.bing.com)');
   });
 
@@ -50,10 +50,10 @@ describe('remark-link-rewrite', () => {
     const output = await run(input, {
       replacer: (url) => {
         if (url.startsWith('https://example.com')) {
-          return url.replace('https://example.com', 'https://example.org')
+          return url.replace('https://example.com', 'https://example.org');
         }
-        return url
-      }
+        return url;
+      },
     });
     expect(output).toMatch('<a href="https://example.org">Example</a>');
   });
@@ -74,7 +74,7 @@ describe('util: replaceAsync', () => {
 
   it('should run async replacement simultaneously', async () => {
     const input = 'foo bar foo bar';
-    const startTime = new Date().getTime()
+    const startTime = new Date().getTime();
     const output = await replaceAsync(input, /foo/g, async () => {
       await sleep(random(200, 500));
       return 'bar';
@@ -94,9 +94,9 @@ describe('util: rewriteJSXURL', () => {
 
     const output = await rewriteJSXURL(input, async url => {
       if (url.startsWith('https://example.com')) {
-        return url.replace('https://example.com', 'https://example.org')
+        return url.replace('https://example.com', 'https://example.org');
       }
-      return url
+      return url;
     });
     expect(output).toMatch(expected);
   });

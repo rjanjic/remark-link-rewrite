@@ -1,4 +1,4 @@
-import {visit} from 'unist-util-visit';
+import { visit } from 'unist-util-visit';
 
 /**
  * Default replacer.
@@ -13,7 +13,7 @@ const defaultReplacer = async url => url;
  * @param asyncFn
  * @returns {Promise<*>}
  */
-export const replaceAsync = async function (str, regex, asyncFn) {
+export const replaceAsync = async function(str, regex, asyncFn) {
   const promises = [];
   str.replace(regex, (match, ...args) => {
     const promise = asyncFn(match, ...args);
@@ -39,8 +39,8 @@ export const rewriteJSXURL = async (value, replacer) => replaceAsync(value, /hre
  * @param options
  * @returns {function(*): Promise<*>}
  */
-function RemarkLinkRewrite(options = {replacer: defaultReplacer}) {
-  const {replacer} = options;
+function RemarkLinkRewrite(options = { replacer: defaultReplacer }) {
+  const { replacer } = options;
   return async tree => {
     const nodes = [];
 
@@ -62,7 +62,7 @@ function RemarkLinkRewrite(options = {replacer: defaultReplacer}) {
       if (node.type === 'jsx' || node.type === 'html') {
         node.value = await rewriteJSXURL(node.value, replacer);
       }
-    }),);
+    }));
     return tree;
   };
 }
