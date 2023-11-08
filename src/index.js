@@ -29,10 +29,16 @@ export const replaceAsync = async function(str, regex, asyncFn) {
  * @param replacer
  * @returns {Promise<*>}
  */
-export const rewriteJSXURL = async (value, replacer) => replaceAsync(value, /href="(.*?)"/g, async (_, url) => {
-  const newUrl = await replacer(url);
-  return `href="${newUrl}"`;
-});
+export const rewriteJSXURL = async (value, replacer) => {
+  replaceAsync(value, /href="(.*?)"/g, async (_, url) => {
+    const newUrl = await replacer(url);
+    return `href="${newUrl}"`;
+  });
+  replaceAsync(value, /src="(.*?)"/g, async (_, url) => {
+    const newUrl = await replacer(url);
+    return `src="${newUrl}"`;
+  });
+};
 
 /**
  * Rewrite the URL in a Markdown node.
@@ -45,18 +51,18 @@ function RemarkLinkRewrite(options = { replacer: defaultReplacer }) {
     const nodes = [];
 
     visit(tree, node => {
-      if (node.type === 'link') {
+      if (node.type === 'link' || node.type === 'image') {
         nodes.push(node);
       }
       if (node.type === 'jsx' || node.type === 'html') {
-        if (/<a.*>/.test(node.value)) {
+        if (/<a.*>/.test(node.value) || /<img.*>/.test(node.value)) {
           nodes.push(node);
         }
       }
     });
 
     await Promise.all(nodes.map(async node => {
-      if (node.type === 'link') {
+      if (node.type === 'link' || node.type === 'image') {
         node.url = await replacer(node.url);
       }
       if (node.type === 'jsx' || node.type === 'html') {
