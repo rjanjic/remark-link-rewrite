@@ -18,6 +18,12 @@ describe('remark-link-rewrite', () => {
     expect(output).toMatch(input);
   });
 
+  it('should use the default replacer when options object is empty', async () => {
+    const input = '[Example](https://example.com)';
+    const output = await run(input, {});
+    expect(output).toMatch(input);
+  });
+
   it('should return the new value with the custom replacer', async () => {
     const input = '[Example](https://example.com)';
     const output = await run(input, {
@@ -64,6 +70,12 @@ describe('util: replaceAsync', () => {
     const input = 'foo bar baz qux';
     const output = await replaceAsync(input, 'foo', async () => 'bar');
     expect(output).toMatch('bar bar baz qux');
+  });
+
+  it('should replace all occurrences when search value is a string', async () => {
+    const input = 'foo foo foo';
+    const output = await replaceAsync(input, 'foo', async () => 'bar');
+    expect(output).toMatch('bar bar bar');
   });
 
   it('should do regex replacement: `/foo/g` with `bar`', async () => {

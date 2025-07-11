@@ -14,13 +14,23 @@ const defaultReplacer = async url => url;
  * @returns {Promise<*>}
  */
 export const replaceAsync = async function(str, regex, asyncFn) {
+  // ensure we are always working with a global regular expression
+  let pattern;
+  if (typeof regex === 'string') {
+    const escaped = regex.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    pattern = new RegExp(escaped, 'g');
+  } else {
+    const flags = regex.flags.includes('g') ? regex.flags : `${regex.flags}g`;
+    pattern = new RegExp(regex.source, flags);
+  }
+
   const promises = [];
-  str.replace(regex, (match, ...args) => {
+  str.replace(pattern, (match, ...args) => {
     const promise = asyncFn(match, ...args);
     promises.push(promise);
   });
   const data = await Promise.all(promises);
-  return str.replace(regex, () => data.shift());
+  return str.replace(pattern, () => data.shift());
 };
 
 /**
@@ -39,8 +49,8 @@ export const rewriteJSXURL = async (value, replacer) => replaceAsync(value, /hre
  * @param options
  * @returns {function(*): Promise<*>}
  */
-function RemarkLinkRewrite(options = { replacer: defaultReplacer }) {
-  const { replacer } = options;
+function RemarkLinkRewrite(options = {}) {
+  const { replacer = defaultReplacer } = options;
   return async tree => {
     const nodes = [];
 
