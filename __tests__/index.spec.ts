@@ -1,14 +1,19 @@
 import { remark } from 'remark';
-import { promisify } from 'util';
-import linkRewrite, { replaceAsync, rewriteJSXURL } from '../src';
+import { describe, expect, it } from 'vitest';
+import linkRewrite, {
+  replaceAsync,
+  rewriteJSXURL,
+  type RemarkLinkRewriteOptions,
+} from '../src/index.ts';
 
-const sleep = promisify(setTimeout);
-const random = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
+const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
+const random = (min: number, max: number) =>
+  Math.floor(min + Math.random() * (max - min + 1));
 
-async function run(input, options) {
+async function run(input: string, options?: RemarkLinkRewriteOptions): Promise<string> {
   const processor = remark().use(linkRewrite, options);
   const { value } = await processor.process(input);
-  return value;
+  return String(value);
 }
 
 describe('remark-link-rewrite', () => {
@@ -32,7 +37,7 @@ describe('remark-link-rewrite', () => {
   });
 
   it('should return the new value with the custom replacer with resolving the new value async', async () => {
-    async function replaceGoogleWithBing(url) {
+    async function replaceGoogleWithBing(url: string): Promise<string> {
       if (url === 'https://www.google.com') {
         await sleep(200);
         return 'https://www.bing.com';

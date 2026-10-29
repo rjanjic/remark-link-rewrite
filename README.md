@@ -14,6 +14,8 @@ This package is ESM only. In Node.js (version 12.20+, 14.14+, or 16.0+), install
 npm install remark-link-rewrite
 ```
 
+The package includes TypeScript declarations for its public API.
+
 ## Basic Usage
 
 Here's a simple example of how to use the plugin to replace links that start with `https://example.com` to `https://example.org`.
